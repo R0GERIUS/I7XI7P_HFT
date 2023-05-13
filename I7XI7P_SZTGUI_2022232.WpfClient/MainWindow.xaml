@@ -7,6 +7,70 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Row="0" Grid.Column="0" Content="Job" HorizontalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="1" Content="Armor" HorizontalAlignment="Center"/>
+        <Label Grid.Row="0" Grid.Column="2" Content="Weapon" HorizontalAlignment="Center"/>
+        
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Jobs}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding Role}" ContentStringFormat=" ({0})"/>
+                    </StackPanel> 
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1">
 
+        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="2">
+
+        </ListBox>
+
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <DockPanel>
+                <Label Content="Name"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Role"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <Button Content="Add / Edit"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <DockPanel>
+                <Label Content="Name"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Base Defense"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <Button Content="Add / Edit"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="2">
+            <DockPanel>
+                <Label Content="Name"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Base Damage"/>
+                <TextBox></TextBox>
+            </DockPanel>
+            <Button Content="Add / Edit" Command="{Binding PutWeaponCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>

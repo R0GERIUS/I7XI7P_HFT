@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = App.Current.Services.GetService<MainWindowViewModel>();
         }
     }
 }
