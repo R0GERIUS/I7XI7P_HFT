@@ -3,17 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using AKFAC0_HFT_2021222.Logic.Classes;
 using AKFAC0_HFT_2021222.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR;
+using AKFAC0_HFT_2021222.Endpoint.Services;
 
 namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 {
-	[Route("[controller]/[action]")]
-	[ApiController]
-	public class ArmorController : ControllerBase
+    [Route("[controller]")]
+    [ApiController]
+    [ApiExplorerSettings(GroupName = "Armor")]
+    public class ArmorController : ControllerBase
 	{
 		IArmorLogic logic;
-		public ArmorController(IArmorLogic logic)
+        private readonly IHubContext<SignalRHub> hub;
+        public ArmorController(IArmorLogic logic, IHubContext<SignalRHub> hub)
 		{
 			this.logic = logic;
+			this.hub = hub;
 		}
 		[HttpGet]
 		public IEnumerable<Armor> ReadAll() //works kinda?
@@ -44,17 +49,17 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 		{
 			this.logic.Delete(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAllJobArmors/{id}")]
 		public IEnumerable<Armor> GetAllJobArmors(string id)
 		{
 			return this.logic.GetAllJobArmors(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAverageDefenceByClass/{id}")]
 		public double? GetAverageDefenceByClass(string id)
 		{
 			return this.logic.GetAverageDefenceByClass(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAverageDefence")]
 		public IEnumerable<KeyValuePair<string, double>> GetAverageDefence()
 		{
 			return this.logic.GetAverageDefence();

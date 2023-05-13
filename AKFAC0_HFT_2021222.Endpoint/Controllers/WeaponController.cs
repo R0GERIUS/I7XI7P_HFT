@@ -1,19 +1,24 @@
-﻿using AKFAC0_HFT_2021222.Logic.Classes;
+﻿using AKFAC0_HFT_2021222.Endpoint.Services;
+using AKFAC0_HFT_2021222.Logic.Classes;
 using AKFAC0_HFT_2021222.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 
 namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 {
-	[Route("[controller]/[action]")]
-	[ApiController]
-	public class WeaponController : ControllerBase
+    [Route("[controller]")]
+    [ApiController]
+    [ApiExplorerSettings(GroupName = "Weapon")]
+    public class WeaponController : ControllerBase
 	{
 		IWeaponLogic logic;
-		public WeaponController(IWeaponLogic logic)
+        private readonly IHubContext<SignalRHub> hub;
+        public WeaponController(IWeaponLogic logic, IHubContext<SignalRHub> hub)
 		{
 			this.logic = logic;
+			this.hub = hub;
 		}
 		[HttpGet]
 		public IEnumerable<Weapon> ReadAll() //works kinda?
@@ -44,17 +49,17 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 		{
 			this.logic.Delete(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAllJobWeapons/{id}")]
 		public IEnumerable<Weapon> GetAllJobWeapons(string id)
 		{
 			return this.logic.GetAllJobWeapons(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAverageDamageByJob/{id}")]
 		public double? GetAverageDamageByJob(string id)
 		{
 			return this.logic.GetAverageDamageByJob(id);
 		}
-		[HttpGet]
+		[HttpGet("GetAverageDamage")]
 		public IEnumerable<KeyValuePair<string, double>> GetAverageDamage()
 		{
 			return this.logic.GetAverageDamage();

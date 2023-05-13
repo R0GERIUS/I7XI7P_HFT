@@ -1,20 +1,25 @@
-﻿using AKFAC0_HFT_2021222.Logic;
+﻿using AKFAC0_HFT_2021222.Endpoint.Services;
+using AKFAC0_HFT_2021222.Logic;
 using AKFAC0_HFT_2021222.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 
 namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 {
-	[Route("[controller]")]
-	[ApiController]
-	public class JobController : ControllerBase
+    [Route("[controller]")]
+    [ApiController]
+    [ApiExplorerSettings(GroupName = "Job")]
+    public class JobController : ControllerBase
 	{
 		IJobLogic logic;
-		public JobController(IJobLogic logic)
+        private readonly IHubContext<SignalRHub> hub;
+        public JobController(IJobLogic logic, IHubContext<SignalRHub> hub)
 		{
 			this.logic = logic;
-		}
+            this.hub = hub;
+        }
 		[HttpGet]
 		public IEnumerable<Job> ReadAll() //works kinda?
 		{
@@ -45,22 +50,22 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 			this.logic.Delete(id);
 		}
 
-		[HttpGet("GetAllJobsByRole")]
+		[HttpGet("GetAllJobsByRole/{id}")]
 		public IEnumerable<Job> GetAllJobsByRole(string id)
 		{
 			return this.logic.GetAllJobsByRole(id);
 		}
-		[HttpGet("GetAllWeaponByRole")]
+		[HttpGet("GetAllWeaponByRole/{id}")]
 		public IEnumerable<Weapon> GetAllWeaponByRole(string id)
 		{
 			return this.logic.GetAllWeaponByRole(id);
 		}
-		[HttpGet("GetAllWeaponByRoleMinimumDmg")]
+		[HttpGet("GetAllWeaponByRoleMinimumDmg/{id}/{dmg}")]
 		public IEnumerable<Weapon> GetAllWeaponByRoleMinimumDmg(string id, int dmg)
 		{
 			return this.logic.GetAllWeaponByRoleMinimumDmg(id, dmg);
 		}
-		[HttpGet("GetHighestDMGWeaponGivenRole")]
+		[HttpGet("GetHighestDMGWeaponGivenRole/{id}")]
 		public IEnumerable<Weapon> GetHighestDMGWeaponGivenRole(string id)
 		{
 			return this.logic.GetHighestDMGWeaponGivenRole(id);

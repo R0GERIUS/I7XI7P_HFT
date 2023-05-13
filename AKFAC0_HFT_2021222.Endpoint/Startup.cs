@@ -1,3 +1,4 @@
+using AKFAC0_HFT_2021222.Endpoint.Services;
 using AKFAC0_HFT_2021222.Logic;
 using AKFAC0_HFT_2021222.Logic.Classes;
 using AKFAC0_HFT_2021222.Models;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -47,7 +49,11 @@ namespace AKFAC0_HFT_2021222.Endpoint
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "AKFAC0_HFT_2021222.Endpoint", Version = "v1" });
-			});
+                c.TagActionsBy(api => new[] { api.GroupName });
+                c.DocInclusionPredicate((name, api) => true);
+            });
+
+			services.AddSignalR();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +82,7 @@ namespace AKFAC0_HFT_2021222.Endpoint
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapHub<SignalRHub>("/hub");
 			});
 		}
 	}
