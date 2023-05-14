@@ -14,7 +14,7 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
     public class ArmorController : ControllerBase
 	{
 		IArmorLogic logic;
-        private readonly IHubContext<SignalRHub> hub;
+        IHubContext<SignalRHub> hub;
         public ArmorController(IArmorLogic logic, IHubContext<SignalRHub> hub)
 		{
 			this.logic = logic;
@@ -36,19 +36,23 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 		public void Post([FromBody] Armor value)
 		{
 			this.logic.Create(value);
+			this.hub.Clients.All.SendAsync("ArmorCreated", value);
 		}
 
 		[HttpPut]
 		public void Put([FromBody] Armor value)
 		{
 			this.logic.Update(value);
-		}
+            this.hub.Clients.All.SendAsync("ArmorUpdated", value);
+        }
 
 		[HttpDelete("{id}")]
 		public void Delete(int id) //works
 		{
+			var armorToDelete = this.logic.Read(id);
 			this.logic.Delete(id);
-		}
+            this.hub.Clients.All.SendAsync("ArmorDeleted", armorToDelete);
+        }
 		[HttpGet("GetAllJobArmors/{id}")]
 		public IEnumerable<Armor> GetAllJobArmors(string id)
 		{

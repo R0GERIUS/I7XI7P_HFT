@@ -14,7 +14,7 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
     public class JobController : ControllerBase
 	{
 		IJobLogic logic;
-        private readonly IHubContext<SignalRHub> hub;
+        IHubContext<SignalRHub> hub;
         public JobController(IJobLogic logic, IHubContext<SignalRHub> hub)
 		{
 			this.logic = logic;
@@ -36,19 +36,23 @@ namespace AKFAC0_HFT_2021222.Endpoint.Controllers
 		public void Post([FromBody] Job value)
 		{
 			this.logic.Create(value);
-		}
+            this.hub.Clients.All.SendAsync("JobCreated", value);
+        }
 
 		[HttpPut]
 		public void Put([FromBody] Job value)
 		{
 			this.logic.Update(value);
-		}
+            this.hub.Clients.All.SendAsync("JobUpdated", value);
+        }
 
 		[HttpDelete("{id}")]
 		public void Delete(int id) //works
 		{
+			var jobToDelete = this.logic.Read(id);
 			this.logic.Delete(id);
-		}
+            this.hub.Clients.All.SendAsync("JobDeleted", jobToDelete);
+        }
 
 		[HttpGet("GetAllJobsByRole/{id}")]
 		public IEnumerable<Job> GetAllJobsByRole(string id)

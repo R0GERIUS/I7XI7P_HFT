@@ -12,7 +12,7 @@ namespace AKFAC0_HFT_2021222.Endpoint.Services
             return base.OnConnectedAsync();
         }
 
-        public override Task OnDisconnectedAsync(Exception? exception)
+        public override Task OnDisconnectedAsync(Exception exception)
         {
             Clients.Caller.SendAsync("Disconnected", Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
