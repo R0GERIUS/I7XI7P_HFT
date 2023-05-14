@@ -1,4 +1,5 @@
 ﻿using AKFAC0_HFT_2021222.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,24 +11,73 @@ using System.Windows.Input;
 
 namespace I7XI7P_SZTGUI_2022232.WpfClient
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : ObservableRecipient
     {
         private readonly string host = "http://localhost:30703/";
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set { SetProperty(ref errorMessage, value); }
+        }
+
 
         public RestCollection<Armor> Armors { get; set; }
         public RestCollection<Job> Jobs { get; set; }
         public RestCollection<Weapon> Weapons { get; set; }
 
-        public string ArmorName { get; set; }
-        public int ArmorBaseDefense { get; set; }
-        public string JobName { get; set; }
-        public string JobRole { get; set; }
-        public string WeaponName { get; set; }
-        public int WeaponBaseDamage { get; set; }
+        public ICommand AddArmorCommand { get; set; }
+        public ICommand AddJobCommand { get; set; }
+        public ICommand AddWeaponCommand { get; set; }
+        public ICommand DeleteArmorCommand { get; set; }
+        public ICommand DeleteJobCommand { get; set; }
+        public ICommand DeleteWeaponCommand { get; set; }
+        public ICommand UpdateArmorCommand { get; set; }
+        public ICommand UpdateJobCommand { get; set; }
+        public ICommand UpdateWeaponCommand { get; set; }
 
-        public ICommand PutArmorCommand { get; set; }
-        public ICommand PutJobCommand { get; set; }
-        public ICommand PutWeaponCommand { get; set; }
+        private Armor selectedArmor;
+        public Armor SelectedArmor
+        {
+            get { return selectedArmor; }
+            set { 
+                selectedArmor = value;
+                OnPropertyChanged();
+                ((RelayCommand)DeleteArmorCommand).NotifyCanExecuteChanged();
+            }
+        }
+        private Job selectedJob;
+        public Job SelectedJob
+        {
+            get { return selectedJob; }
+            set {
+                if (value != null)
+                {
+                    selectedJob = new Job()
+                    {
+                        Id = value.Id,
+                        Name = value.Name,
+                        Role = value.Role
+                    };
+                    OnPropertyChanged();
+                    ((RelayCommand)DeleteJobCommand).NotifyCanExecuteChanged();
+                }
+            }
+        }
+        private Weapon selectedWeapon;
+        public Weapon SelectedWeapon
+        {
+            get { return selectedWeapon; }
+            set { 
+                selectedWeapon = value;
+                OnPropertyChanged();
+                ((RelayCommand)DeleteWeaponCommand).NotifyCanExecuteChanged();
+            }
+        }
+
+
 
         public MainWindowViewModel()
         {
@@ -35,33 +85,90 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient
             Jobs = new RestCollection<Job>(host, "job", "hub");
             Weapons = new RestCollection<Weapon>(host, "weapon", "hub");
 
-            PutArmorCommand = new RelayCommand(() =>
+            AddArmorCommand = new RelayCommand(() =>
             {
-                Armors.Update(new Armor()
+                Armors.Add(new Armor()
                 {
-                    BaseDefense = ArmorBaseDefense,
-                    Name = ArmorName
+                    BaseDefense = SelectedArmor.BaseDefense,
+                    Name = SelectedArmor.Name
                 });
             });
-            PutJobCommand = new RelayCommand(() =>
+            AddJobCommand = new RelayCommand(() =>
             {
-                Jobs.Update(new Job()
+                Jobs.Add(new Job()
                 {
-                    Role = JobRole,
-                    Name = JobName
+                    Role = SelectedJob.Role,
+                    Name = SelectedJob.Name
                 });
             });
-            PutWeaponCommand = new RelayCommand(() =>
+            AddWeaponCommand = new RelayCommand(() =>
             {
-                Weapons.Update(new Weapon()
+                Weapons.Add(new Weapon()
                 {
-                    BaseDamage = WeaponBaseDamage,
-                    Name = WeaponName
+                    BaseDamage = SelectedWeapon.BaseDamage,
+                    Name = SelectedWeapon.Name
                 });
+            });
+            
+            DeleteArmorCommand = new RelayCommand(() =>
+            {
+                Armors.Delete(SelectedArmor.Id);
             }, () =>
             {
-                return !(string.IsNullOrEmpty(WeaponName)) && WeaponBaseDamage > 0;
+                return SelectedArmor != null;
             });
+            DeleteJobCommand = new RelayCommand(() =>
+            {
+                Jobs.Delete(SelectedJob.Id);
+            }, () =>
+            {
+                return SelectedJob != null;
+            });
+            DeleteWeaponCommand = new RelayCommand(() =>
+            {
+                Weapons.Delete(SelectedWeapon.Id);
+            }, () =>
+            {
+                return SelectedWeapon != null;
+            });
+            
+            UpdateArmorCommand = new RelayCommand(() =>
+            {
+                try
+                {
+                    Armors.Update(SelectedArmor);
+                }
+                catch (ArgumentException ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
+            });
+            UpdateJobCommand = new RelayCommand(() =>
+            {
+                try
+                {
+                    Jobs.Update(SelectedJob);
+                }
+                catch (ArgumentException ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
+            });
+            UpdateWeaponCommand = new RelayCommand(() =>
+            {
+                try
+                {
+                    Weapons.Update(SelectedWeapon);
+                }
+                catch (ArgumentException ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
+            });
+
+            SelectedArmor = new Armor();
+            SelectedJob = new Job();
+            SelectedWeapon = new Weapon();
         }
     }
 }

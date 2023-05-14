@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:I7XI7P_SZTGUI_2022232.WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="I7XI7P SZTGUI 2022/23/2" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -22,55 +22,114 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Armor" HorizontalAlignment="Center"/>
         <Label Grid.Row="0" Grid.Column="2" Content="Weapon" HorizontalAlignment="Center"/>
         
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Jobs}">
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Name}"/>
-                        <Label Content="{Binding Role}" ContentStringFormat=" ({0})"/>
+                        <Label Content="{Binding Role}" ContentStringFormat="({0})" HorizontalAlignment="Right"/>
                     </StackPanel> 
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="1">
-
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Armors}" SelectedItem="{Binding SelectedArmor}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding BaseDefense}" ContentStringFormat="({0})"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="2">
-
+        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding BaseDamage}" ContentStringFormat="({0})"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <StackPanel Grid.Row="2" Grid.Column="0">
-            <DockPanel>
-                <Label Content="Name"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <DockPanel>
-                <Label Content="Role"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <Button Content="Add / Edit"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedJob.Name}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Role"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedJob.Role}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Add" Command="{Binding AddJobCommand}"/>
+                <Button Grid.Column="1" Content="Update" Command="{Binding UpdateJobCommand}"/>
+                <Button Grid.Column="2" Content="Delete" Command="{Binding DeleteJobCommand}"/>
+            </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DockPanel>
-                <Label Content="Name"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <DockPanel>
-                <Label Content="Base Defense"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <Button Content="Add / Edit"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedArmor.Name}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Base Defense"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedArmor.BaseDefense}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Add" Command="{Binding AddArmorCommand}"/>
+                <Button Grid.Column="1" Content="Update" Command="{Binding UpdateArmorCommand}"/>
+                <Button Grid.Column="2" Content="Delete" Command="{Binding DeleteArmorCommand}"/>
+            </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="2">
-            <DockPanel>
-                <Label Content="Name"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <DockPanel>
-                <Label Content="Base Damage"/>
-                <TextBox></TextBox>
-            </DockPanel>
-            <Button Content="Add / Edit" Command="{Binding PutWeaponCommand}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedWeapon.Name}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Base Damage"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedWeapon.BaseDamage}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Add" Command="{Binding AddWeaponCommand}"/>
+                <Button Grid.Column="1" Content="Update" Command="{Binding UpdateWeaponCommand}"/>
+                <Button Grid.Column="2" Content="Delete" Command="{Binding DeleteWeaponCommand}"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>
