@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:I7XI7P_SZTGUI_2022232.WpfClient"
         mc:Ignorable="d"
-        Title="I7XI7P SZTGUI 2022/23/2" Height="450" Width="800">
+        Title="I7XI7P SZTGUI 2022/23/2" Height="475" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -13,16 +13,36 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        
-        <Label Grid.Row="0" Grid.Column="0" Content="Job" HorizontalAlignment="Center"/>
-        <Label Grid.Row="0" Grid.Column="1" Content="Armor" HorizontalAlignment="Center"/>
-        <Label Grid.Row="0" Grid.Column="2" Content="Weapon" HorizontalAlignment="Center"/>
-        
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}">
+
+        <DockPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton Name="allJobRadio" GroupName="jobRadio" Content="All"></RadioButton>
+                <RadioButton Name="filteredJobRadio" GroupName="jobRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
+            <Label Content="Job" HorizontalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton GroupName="armorRadio" Content="All"></RadioButton>
+                <RadioButton GroupName="armorRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
+            <Label Content="Armor" HorizontalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Row="0" Grid.Column="2">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton GroupName="weaponRadio" Content="All"></RadioButton>
+                <RadioButton GroupName="weaponRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
+            <Label Content="Weapon" HorizontalAlignment="Center"/>
+        </DockPanel>
+        <Label Grid.Row="0" Grid.Column="3" Content="Others" HorizontalAlignment="Center"/>
+
+        <ListBox Name="jobListBox" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -32,7 +52,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Armors}" SelectedItem="{Binding SelectedArmor}">
+        <ListBox Name="armorListBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Armors}" SelectedItem="{Binding SelectedArmor}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -42,7 +62,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}">
+        <ListBox Name="weaponListBox" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -52,6 +72,50 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel Grid.Row="1" Grid.Column="3">
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAverageDefenceByClassCommand}"/>
+                <Label Content="Average Defence By Selected Job"/>
+            </DockPanel>
+            <TextBox Text="{Binding AverageDefenceByClass, Mode=OneWay}"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAverageDefenceCommand}"/>
+                <Label Content="Average Defence"/>
+            </DockPanel>
+            <TextBox Text="{Binding AverageDefence, Mode=OneWay}"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetHighestDMGWeaponByGivenRoleCommand}"/>
+                <Label Content="Highest DMG Weapon by Selected Role"/>
+            </DockPanel>
+            <TextBox Text="{Binding HighestDmgWeaponBySelectedRole.Name, Mode=OneWay}"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAverageDamageByJobCommand}"/>
+                <Label Content="Average Damage by Selected Job"/>
+            </DockPanel>
+            <TextBox Text="{Binding AverageDamageBySelectedJob, Mode=OneWay}"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAverageDamageCommand}"/>
+                <Label Content="Average Damage"/>
+            </DockPanel>
+            <TextBox Text="{Binding AverageDamage, Mode=OneWay}"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAllJobArmorsCommand}"/>
+                <Label Content="All Job Armors"/>
+            </DockPanel>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAllJobWeaponsCommand}"/>
+                <Label Content="All Job Weapons"/>
+            </DockPanel>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAllJobsByRoleCommmand}"/>
+                <Label Content="All Jobs By Selected Role"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="All Weapon By Selected Role and Min DMG"/>
+                <Button DockPanel.Dock="Right" Content="Get" Command="{Binding GetAllWeaponByRoleMinimumDmgCommand}"/>
+                <TextBox Text="{Binding MinDmg}"/>
+            </DockPanel>
+        </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0">
             <Grid>

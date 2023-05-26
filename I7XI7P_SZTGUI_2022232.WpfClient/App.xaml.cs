@@ -1,6 +1,8 @@
 ﻿using AKFAC0_HFT_2021222.Logic;
 using AKFAC0_HFT_2021222.Logic.Classes;
 using CommunityToolkit.Mvvm.Messaging;
+using I7XI7P_SZTGUI_2022232.WpfClient.Services;
+using I7XI7P_SZTGUI_2022232.WpfClient.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,8 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient
         {
             var services = new ServiceCollection();
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<ListWindowViewModel>();
+            services.AddSingleton<IShowListService, ShowListViaWindow>();
 
             return services.BuildServiceProvider();
         }
