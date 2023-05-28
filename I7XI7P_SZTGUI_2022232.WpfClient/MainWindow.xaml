@@ -20,12 +20,24 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0" Grid.Column="0">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton Name="allJobRadio" GroupName="jobRadio" Content="All"></RadioButton>
+                <RadioButton Name="filteredJobRadio" GroupName="jobRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
             <Label Content="Job" HorizontalAlignment="Center"/>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton GroupName="armorRadio" Content="All"></RadioButton>
+                <RadioButton GroupName="armorRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
             <Label Content="Armor" HorizontalAlignment="Center"/>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="2">
+            <StackPanel DockPanel.Dock="Right">
+                <RadioButton GroupName="weaponRadio" Content="All"></RadioButton>
+                <RadioButton GroupName="weaponRadio" Content="Filtered"></RadioButton>
+            </StackPanel>
             <Label Content="Weapon" HorizontalAlignment="Center"/>
         </DockPanel>
         <Label Grid.Row="0" Grid.Column="3" Content="Others" HorizontalAlignment="Center"/>
