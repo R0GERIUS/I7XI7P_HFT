@@ -2,9 +2,33 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>JS Client</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <h1>Armor Catalog</h1>
 
+    <div id="formdiv">
+        <label>Armor Name</label>
+        <input type="text" id="armorname" />
+        <label>Armor Defense</label>
+        <input type="text" id="armordefense" />
+        <button type="button" onclick="create()">Add Armor</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Defense</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="resultarea">
+        </tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
