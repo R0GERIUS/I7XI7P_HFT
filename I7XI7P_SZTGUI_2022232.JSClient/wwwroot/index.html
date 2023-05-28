@@ -6,21 +6,41 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div id="modediv">
-        <button type="button" onclick="switchToArmor()">Armor Catalog</button>
-        <button type="button" onclick="switchToJob()">Job Catalog</button>
-        <button type="button" onclick="switchToWeapon()">Weapon Catalog</button>
-    </div>
+    <button type="button" onclick="switchToArmor()">Armor Catalog</button>
+    <button type="button" onclick="switchToJob()">Job Catalog</button>
+    <button type="button" onclick="switchToWeapon()">Weapon Catalog</button>
 
     <h1 id="headerlabel">Default Catalog</h1>
 
+    <h2>Filter</h2>
+    <div id="filterformdiv">
+        <div id="filterjobdiv">
+            <label id="filterjobidlabel">Job Name</label>
+            <input type="text" id="filterjobid" />
+        </div>
+        <div id="filterrolediv">
+            <label id="filterroleidlabel">Role Name</label>
+            <input type="text" id="filterroleid" />
+        </div>
+        <div id="filtermindmgdiv">
+            <label id="filtermindmglabel">Min Dmg</label>
+            <input type="text" id="filtermindmg" />
+        </div>
+        <button type="button" onclick="jobShowAllJobsByRole()" id="filterjobbutton">Filter Jobs</button>
+        <button type="button" onclick="" id="filterbutton">Filter</button>
+    </div>
+
+    <h2>Add</h2>
     <div id="formdiv">
-        <h2>Add</h2>
         <label id="namelabel">Default Name</label>
         <input type="text" id="name" />
         <label id="valuelabel">Default Value</label>
         <input type="text" id="value" />
-        <button type="button" onclick="armorCreate()" id="addbutton">Add Default</button>
+        <div id="formjobiddiv">
+            <label id="jobidlabel">Job Id</label>
+            <input type="text" id="jobid" />
+        </div>
+        <button type="button" onclick="" id="addbutton">Add Default</button>
     </div>
 
     <div id="updateformdiv">
@@ -29,23 +49,27 @@
         <input type="text" id="updatename" />
         <label id="updatevaluelabel">Default Value</label>
         <input type="text" id="updatevalue" />
-        <button type="button" onclick="armorCreate()" id="updatebutton">Update Default</button>
+        <div id="updatejobiddiv">
+            <label id="updatejobidlabel">Job Id</label>
+            <input type="text" id="updatejobid" />
+        </div>
+        <button type="button" onclick="" id="updatebutton">Update Default</button>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th id="valueth">Value</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="resultarea">
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th id="valueth">Value</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="resultarea">
+            </tbody>
+        </table>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
-    <script src="script.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+        <script src="script.js"></script>
 </body>
 </html>
