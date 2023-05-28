@@ -183,5 +183,21 @@
                 <Button Grid.Column="2" Content="Delete" Command="{Binding DeleteWeaponCommand}"/>
             </Grid>
         </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Armor Job ID"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedArmor.JobId}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Weapon Job ID"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedWeapon.JobId}"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

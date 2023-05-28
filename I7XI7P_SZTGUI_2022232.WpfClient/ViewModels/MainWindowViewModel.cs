@@ -248,7 +248,8 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                 Armors.Add(new Armor()
                 {
                     BaseDefense = SelectedArmor.BaseDefense,
-                    Name = SelectedArmor.Name
+                    Name = SelectedArmor.Name,
+                    JobId = SelectedArmor.JobId
                 });
             });
             AddJobCommand = new RelayCommand(() =>
@@ -264,7 +265,8 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                 Weapons.Add(new Weapon()
                 {
                     BaseDamage = SelectedWeapon.BaseDamage,
-                    Name = SelectedWeapon.Name
+                    Name = SelectedWeapon.Name,
+                    JobId = SelectedWeapon.JobId
                 });
             });
 
