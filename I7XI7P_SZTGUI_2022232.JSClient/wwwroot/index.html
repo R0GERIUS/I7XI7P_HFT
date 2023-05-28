@@ -6,21 +6,38 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <h1>Armor Catalog</h1>
+    <div id="modediv">
+        <button type="button" onclick="switchToArmor()">Armor Catalog</button>
+        <button type="button" onclick="switchToJob()">Job Catalog</button>
+        <button type="button" onclick="switchToWeapon()">Weapon Catalog</button>
+    </div>
+
+    <h1 id="headerlabel">Default Catalog</h1>
 
     <div id="formdiv">
-        <label>Armor Name</label>
-        <input type="text" id="armorname" />
-        <label>Armor Defense</label>
-        <input type="text" id="armordefense" />
-        <button type="button" onclick="create()">Add Armor</button>
+        <h2>Add</h2>
+        <label id="namelabel">Default Name</label>
+        <input type="text" id="name" />
+        <label id="valuelabel">Default Value</label>
+        <input type="text" id="value" />
+        <button type="button" onclick="armorCreate()" id="addbutton">Add Default</button>
+    </div>
+
+    <div id="updateformdiv">
+        <h2>Update</h2>
+        <label id="updatenamelabel">Default Name</label>
+        <input type="text" id="updatename" />
+        <label id="updatevaluelabel">Default Value</label>
+        <input type="text" id="updatevalue" />
+        <button type="button" onclick="armorCreate()" id="updatebutton">Update Default</button>
     </div>
 
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Defense</th>
+                <th id="valueth">Value</th>
                 <th>Actions</th>
             </tr>
         </thead>
