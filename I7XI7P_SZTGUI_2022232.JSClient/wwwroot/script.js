@@ -516,7 +516,7 @@ function weaponCreate() {
 function weaponUpdate() {
     let name = document.getElementById('updatename').value;
     let value = document.getElementById('updatevalue').value;
-    let jobId = document.getElementById('updatejobId').value;
+    let jobId = document.getElementById('updatejobid').value;
     fetch('http://localhost:30703/weapon', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', },
