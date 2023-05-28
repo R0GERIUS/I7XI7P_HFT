@@ -75,7 +75,13 @@ namespace AKFAC0_HFT_2021222.Endpoint
 				await context.Response.WriteAsJsonAsync(response);
 			}));
 
-			app.UseRouting();
+            app.UseCors(x => x
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:5259"));
+
+            app.UseRouting();
 
 			app.UseAuthorization();
 
