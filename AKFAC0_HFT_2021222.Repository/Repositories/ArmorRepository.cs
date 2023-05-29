@@ -21,14 +21,20 @@ namespace AKFAC0_HFT_2021222.Repository.Repositories
 		public override void Update(Armor item)
 		{
 			var old = Read(item.Id);
-			foreach (var prop in old.GetType().GetProperties())
+			if (old == null)
 			{
-				if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
-				{
-					prop.SetValue(old, prop.GetValue(item));
-				}
-			}
-			ctx.SaveChanges();
+				throw new ArgumentNullException("This armor does not exist");
+			} else
+			{
+                foreach (var prop in old.GetType().GetProperties())
+                {
+                    if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                    {
+                        prop.SetValue(old, prop.GetValue(item));
+                    }
+                }
+                ctx.SaveChanges();
+            }
 		}
 	}
 }
