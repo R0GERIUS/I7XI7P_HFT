@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:I7XI7P_SZTGUI_2022232.WpfClient"
+        xmlns:local="clr-namespace:I7XI7P_SZTGUI_2022232.WpfClient" 
+        xmlns:viewmodels="clr-namespace:I7XI7P_SZTGUI_2022232.WpfClient.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="I7XI7P SZTGUI 2022/23/2" Height="475" Width="1200">
     <Grid>
