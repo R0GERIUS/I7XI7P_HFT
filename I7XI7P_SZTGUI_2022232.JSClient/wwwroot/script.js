@@ -201,6 +201,7 @@ function armorDisplay() {
 }
 
 function armorRemove(id) {
+    document.getElementById('updateformdiv').style.display = "none";
     fetch('http://localhost:30703/armor/' + id, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', },
@@ -213,7 +214,6 @@ function armorRemove(id) {
             armorGetData();
         })
         .catch((error) => { console.error('Error:', error); });
-
 }
 
 function armorShowUpdate(id) {
@@ -329,6 +329,7 @@ function jobDisplay() {
 }
 
 function jobRemove(id) {
+    document.getElementById('updateformdiv').style.display = "none";
     fetch('http://localhost:30703/job/' + id, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', },
@@ -340,7 +341,6 @@ function jobRemove(id) {
             jobGetData();
         })
         .catch((error) => { console.error('Error:', error); });
-
 }
 
 function jobShowUpdate(id) {
@@ -470,6 +470,7 @@ function weaponDisplay() {
 }
 
 function weaponRemove(id) {
+    document.getElementById('updateformdiv').style.display = "none";
     fetch('http://localhost:30703/weapon/' + id, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', },
@@ -482,7 +483,6 @@ function weaponRemove(id) {
             weaponGetData();
         })
         .catch((error) => { console.error('Error:', error); });
-
 }
 
 function weaponShowUpdate(id) {

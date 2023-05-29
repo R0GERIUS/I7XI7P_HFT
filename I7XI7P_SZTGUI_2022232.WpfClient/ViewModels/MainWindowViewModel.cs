@@ -54,9 +54,19 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
             get { return selectedArmor; }
             set
             {
-                selectedArmor = value;
-                OnPropertyChanged();
-                ((RelayCommand)DeleteArmorCommand).NotifyCanExecuteChanged();
+                if (value != null)
+                {
+                    selectedArmor = new Armor()
+                    {
+                        Id = value.Id,
+                        Name = value.Name,
+                        BaseDefense = value.BaseDefense,
+                        JobId = value.JobId
+                    };
+                    OnPropertyChanged();
+                    ((RelayCommand)UpdateArmorCommand).NotifyCanExecuteChanged();
+                    ((RelayCommand)DeleteArmorCommand).NotifyCanExecuteChanged();
+                }
             }
         }
         private Job selectedJob;
@@ -74,6 +84,7 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                         Role = value.Role
                     };
                     OnPropertyChanged();
+                    ((RelayCommand)UpdateJobCommand).NotifyCanExecuteChanged();
                     ((RelayCommand)DeleteJobCommand).NotifyCanExecuteChanged();
                     ((RelayCommand)GetAllJobArmorsCommand).NotifyCanExecuteChanged();
                     ((RelayCommand)GetAverageDefenceByClassCommand).NotifyCanExecuteChanged();
@@ -92,9 +103,19 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
             get { return selectedWeapon; }
             set
             {
-                selectedWeapon = value;
-                OnPropertyChanged();
-                ((RelayCommand)DeleteWeaponCommand).NotifyCanExecuteChanged();
+                if (value != null)
+                {
+                    selectedWeapon = new Weapon()
+                    {
+                        Id = value.Id,
+                        Name = value.Name,
+                        BaseDamage = value.BaseDamage,
+                        JobId = value.JobId
+                    };
+                    OnPropertyChanged();
+                    ((RelayCommand)UpdateWeaponCommand).NotifyCanExecuteChanged();
+                    ((RelayCommand)DeleteWeaponCommand).NotifyCanExecuteChanged();
+                }
             }
         }
 
@@ -245,51 +266,75 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
             // CRUD Commands
             AddArmorCommand = new RelayCommand(() =>
             {
-                Armors.Add(new Armor()
+                try
                 {
-                    BaseDefense = SelectedArmor.BaseDefense,
-                    Name = SelectedArmor.Name,
-                    JobId = SelectedArmor.JobId
-                });
+                    Armors.Add(new Armor()
+                    {
+                        BaseDefense = SelectedArmor.BaseDefense,
+                        Name = SelectedArmor.Name,
+                        JobId = SelectedArmor.JobId
+                    });
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
             });
             AddJobCommand = new RelayCommand(() =>
             {
-                Jobs.Add(new Job()
+                try
                 {
-                    Role = SelectedJob.Role,
-                    Name = SelectedJob.Name
-                });
+                    Jobs.Add(new Job()
+                    {
+                        Role = SelectedJob.Role,
+                        Name = SelectedJob.Name
+                    });
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
             });
             AddWeaponCommand = new RelayCommand(() =>
             {
-                Weapons.Add(new Weapon()
+                try
                 {
-                    BaseDamage = SelectedWeapon.BaseDamage,
-                    Name = SelectedWeapon.Name,
-                    JobId = SelectedWeapon.JobId
-                });
+                    Weapons.Add(new Weapon()
+                    {
+                        BaseDamage = SelectedWeapon.BaseDamage,
+                        Name = SelectedWeapon.Name,
+                        JobId = SelectedWeapon.JobId
+                    });
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                }
             });
 
             DeleteArmorCommand = new RelayCommand(() =>
             {
                 Armors.Delete(SelectedArmor.Id);
+                SelectedArmor.Id = 0;
             }, () =>
             {
-                return SelectedArmor != null;
+                return SelectedArmor.Id > 0;
             });
             DeleteJobCommand = new RelayCommand(() =>
             {
                 Jobs.Delete(SelectedJob.Id);
+                SelectedJob.Id = 0;
             }, () =>
             {
-                return SelectedJob != null;
+                return SelectedJob.Id > 0;
             });
             DeleteWeaponCommand = new RelayCommand(() =>
             {
                 Weapons.Delete(SelectedWeapon.Id);
+                SelectedWeapon.Id = 0;
             }, () =>
             {
-                return SelectedWeapon != null;
+                return SelectedWeapon.Id > 0;
             });
 
             UpdateArmorCommand = new RelayCommand(() =>
@@ -298,10 +343,13 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                 {
                     Armors.Update(SelectedArmor);
                 }
-                catch (ArgumentException ex)
+                catch (Exception ex)
                 {
                     ErrorMessage = ex.Message;
                 }
+            }, () =>
+            {
+                return SelectedArmor.Id > 0;
             });
             UpdateJobCommand = new RelayCommand(() =>
             {
@@ -309,10 +357,13 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                 {
                     Jobs.Update(SelectedJob);
                 }
-                catch (ArgumentException ex)
+                catch (Exception ex)
                 {
                     ErrorMessage = ex.Message;
                 }
+            }, () =>
+            {
+                return SelectedJob.Id > 0;
             });
             UpdateWeaponCommand = new RelayCommand(() =>
             {
@@ -320,10 +371,13 @@ namespace I7XI7P_SZTGUI_2022232.WpfClient.ViewModels
                 {
                     Weapons.Update(SelectedWeapon);
                 }
-                catch (ArgumentException ex)
+                catch (Exception ex)
                 {
                     ErrorMessage = ex.Message;
                 }
+            }, () =>
+            {
+                return SelectedWeapon.Id > 0;
             });
 
             // Non CRUD Commands
